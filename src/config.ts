@@ -1,7 +1,7 @@
 /**
  * Redirect config: a JSON object mapping a bare host to an absolute target URL.
  *
- *   { "wanthave.trade": "https://github.com/you/wanthave-trade" }
+ *   { "example.com": "https://github.com/your-name/example" }
  *
  * Each host also matches its `www.` subdomain automatically.
  */

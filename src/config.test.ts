@@ -4,10 +4,10 @@ import { ConfigError, loadConfig, normaliseHost, parseConfig } from "./config";
 describe("parseConfig", () => {
   test("maps each host and its www. subdomain to the target", () => {
     const redirects = parseConfig(
-      JSON.stringify({ "wanthave.trade": "https://github.com/you/wanthave-trade" }),
+      JSON.stringify({ "example.com": "https://github.com/your-name/example" }),
     );
-    expect(redirects.get("wanthave.trade")).toBe("https://github.com/you/wanthave-trade");
-    expect(redirects.get("www.wanthave.trade")).toBe("https://github.com/you/wanthave-trade");
+    expect(redirects.get("example.com")).toBe("https://github.com/your-name/example");
+    expect(redirects.get("www.example.com")).toBe("https://github.com/your-name/example");
     expect(redirects.size).toBe(2);
   });
 

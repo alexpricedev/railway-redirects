@@ -21,7 +21,7 @@ The real config is never committed. The service reads it from:
 
 ```json
 {
-  "wanthave.trade": "https://github.com/your-name/wanthave-trade",
+  "example.com": "https://github.com/your-name/example",
   "old-project.dev": "https://new-project.dev"
 }
 ```
@@ -55,17 +55,35 @@ bun run typecheck
 
 ## Deploying to Railway
 
-1. Create a service from this repo. `railway.json` sets the start command and health check.
-2. Run `bun run config:copy`. It validates `redirects.json`, minifies it, and copies it to your clipboard (macOS).
-3. Paste it as the value of a `REDIRECTS` variable on the service, then deploy.
+Deploys use the [Railway CLI](https://docs.railway.com/cli). Install it and log in:
 
-To change redirects later, edit `redirects.json`, run `bun run config:copy` again, and replace the variable's value.
+```sh
+railway login
+```
+
+First deploy:
+
+1. Create a project with `railway init`, or connect to an existing one with `railway link`.
+2. Add an empty service with `railway add` and pick it when prompted.
+3. Run `bun run config:copy`. It validates `redirects.json`, minifies it, and copies it to your clipboard (macOS).
+4. In the Railway dashboard, paste it as the value of a `REDIRECTS` variable on the service.
+5. Deploy the current directory:
+
+   ```sh
+   railway up
+   ```
+
+Railway detects Bun and runs the `start` script from `package.json`. To have Railway wait for the service to be healthy before switching traffic, set the health check path to `/healthz` in the service's settings.
+
+`redirects.json` is gitignored, so `railway up` doesn't upload it. Production config only ever comes from the `REDIRECTS` variable.
+
+To change redirects later, edit `redirects.json`, run `bun run config:copy` again, and replace the variable's value. Railway redeploys with the new config.
 
 ## Adding a domain
 
 For each domain in your config:
 
-1. In the service's settings, add the domain (and `www.` version, if you want it to work) as a custom domain.
+1. Add the domain (and its `www.` version, if you want it to work) as a custom domain, either in the service's settings or with `railway domain example.com`.
 2. At your DNS provider, add the records Railway shows: a CNAME (or ALIAS/flattened CNAME at the root) to Railway's target, plus the verification TXT record.
 3. Railway issues the TLS certificate once DNS resolves.
 
