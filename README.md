@@ -65,9 +65,15 @@ First deploy:
 
 1. Create a project with `railway init`, or connect to an existing one with `railway link`.
 2. Add an empty service with `railway add` and pick it when prompted.
-3. Run `bun run config:copy`. It validates `redirects.json`, minifies it, and copies it to your clipboard (macOS).
-4. In the Railway dashboard, paste it as the value of a `REDIRECTS` variable on the service.
-5. Deploy the current directory:
+3. Set the `REDIRECTS` variable from your local `redirects.json`:
+
+   ```sh
+   bun run config:push
+   ```
+
+   This validates and minifies the file, then sets it on the linked service with `railway variable set`. Any extra arguments are passed through, e.g. `bun run config:push --service redirects`.
+
+4. Deploy the current directory:
 
    ```sh
    railway up
@@ -77,7 +83,9 @@ Railway detects Bun and runs the `start` script from `package.json`. To have Rai
 
 `redirects.json` is gitignored, so `railway up` doesn't upload it. Production config only ever comes from the `REDIRECTS` variable.
 
-To change redirects later, edit `redirects.json`, run `bun run config:copy` again, and replace the variable's value. Railway redeploys with the new config.
+To change redirects later, edit `redirects.json` and run `bun run config:push`. Railway redeploys with the new config.
+
+To set the variable by hand instead, `bun run config:copy` validates and minifies `redirects.json` and copies it to your clipboard (macOS), ready to paste as the value of `REDIRECTS` in the Railway dashboard.
 
 ## Adding a domain
 

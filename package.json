@@ -8,7 +8,8 @@
     "dev": "bun --watch src/server.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
-    "config:copy": "bun scripts/config-copy.ts"
+    "config:copy": "bun scripts/config-copy.ts",
+    "config:push": "bun scripts/config-push.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
