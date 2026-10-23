@@ -89,6 +89,8 @@ To set the variable by hand instead, `bun run config:copy` validates and minifie
 
 ## Adding a domain
 
+A person does these steps by hand, not an agent. When an agent adds a redirect, its job ends at editing `redirects.json` and running `bun run config:push`: it doesn't add custom domains on Railway or touch DNS.
+
 For each domain in your config:
 
 1. Add the domain (and its `www.` version, if you want it to work) as a custom domain, either in the service's settings or with `railway domain example.com`.
